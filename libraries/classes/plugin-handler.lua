@@ -55,6 +55,8 @@ function plugin_handler:load(name)
     events = emitter_proxy(self.server_handler.event_emitter),
     discordia = import("discordia"),
     server = self.server_handler,
+    command_handler = self.server_handler.command_handler,
+    plugin_handler = self.server_handler.plugin_handler,
     log = function() end,
     import = import,
   },{__index = _G})
