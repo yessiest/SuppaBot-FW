@@ -19,7 +19,29 @@ function command:__init(name,callback)
     no_parsing = false, --check if you want to disable the message argument parsing process
     timeout = 1000, --set the timeout for a command
   }
-  self.callback = callback
+  if type(callback) == "table" then
+    self.options = callback.options or self.options
+    self.callback = callback.callback
+    self.args = callback.args or self.args
+    if callback.users then
+      for k,v in pairs(callback.users) do
+        self.rules:set_user_rule(k,v)
+      end
+    end
+    if callback.roles then
+      for k,v in pairs(callback.roles) do
+        self.rules:set_group_rule(k,v)
+      end
+    end
+    if callback.perm then
+      self.rules:set_perm_rules(callback.perm)
+    end
+    if callback.help then
+      self:set_help(callback.help,callback.usage)
+    end
+  elseif type(callback) == "function" then
+    self.callback = callback
+  end
 end
 --set the callback to be called on comm:exec(msg)
 function command:set_callback(fn)
