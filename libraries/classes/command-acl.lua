@@ -16,7 +16,7 @@ function command_acl:check_group(roles)
         highest_role_status = self.group_rules[v.id]
       end
       if v.position > highest_role.position then
-        highest_role = v.position
+        highest_role = v
         highest_role_status = self.group_rules[v.id]
       end
     end
