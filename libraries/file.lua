@@ -1,4 +1,4 @@
---This bot is heavily dependent on file operations, therefore this library exists.
+--This bot is heavily dependent on file operations, therefore this library exists. Also, no, luvit's filesystem module is not what I want. 
 local file = {}
 local json
 if pcall(import,"json") then

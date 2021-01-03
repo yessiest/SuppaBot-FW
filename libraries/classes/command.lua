@@ -21,7 +21,7 @@ function command:__init(name,callback)
   }
   if type(callback) == "table" then
     self.options = callback.options or self.options
-    self.callback = callback.callback
+    self.callback = callback.exec
     self.args = callback.args or self.args
     if callback.users then
       for k,v in pairs(callback.users) do

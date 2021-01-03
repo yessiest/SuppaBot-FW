@@ -33,6 +33,16 @@ function plugin_handler:scan_folder(path)
       self.plugin_info[metadata.name].path = path.."/"
     end
     file:close()
+  else
+    for k,v in pairs({"/init.lua","/main.lua"}) do
+      local file = io.open(path..v,"r")
+      if file then
+        local name = path:match("[^/]+$")
+        self.plugin_info[name] = {["main"]="init.lua"}
+        self.plugin_info[name].path = path.."/"
+        file:close()
+      end
+    end
   end
 end
 
@@ -68,6 +78,7 @@ function plugin_handler:load(name)
     return false, "Plugin metadata entry exists, but the main file isn't specified"
   end
   if file.exists(plugin_meta.path..plugin_meta.main) then
+    environment["plugin_path"] = plugin_meta.path
     local plugin_content = file.read(plugin_meta.path..plugin_meta.main,"*a")
     local plugin_loader,err = load(plugin_content,"plugin loader",nil,environment)
     if plugin_loader then
